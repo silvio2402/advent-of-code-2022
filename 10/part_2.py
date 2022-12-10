@@ -11,7 +11,6 @@ def main():
     with open(os.path.join(os.path.dirname(__file__), "./input.txt"), 'r') as f:
         lines = f.readlines()
         lines = [line.strip() for line in lines]
-        signal_strengths = []
         crt = [list("." * 40), list("." * 40),
                list("." * 40), list("." * 40), list("." * 40), list("." * 40), ]
         register_x = 1
@@ -22,15 +21,13 @@ def main():
         operation_index = 0
         cycle = 0
         while True:
-            if cycle != 0 and (cycle - 20) % 40 == 0:
-                signal_strengths.append(cycle * register_x)
-
             # draw sprite in crt
             if (cycle != 0 and cycle < 240):
-                dist = abs((cycle-1) % 40 - register_x)
+                char_index = cycle - 1
+                dist = abs((char_index) % 40 - register_x)
                 should_draw = dist <= 1
-                x = (cycle-1) % 40
-                y = math.floor((cycle-1) / 40)
+                x = (char_index) % 40
+                y = math.floor((char_index) / 40)
                 crt[y][x] = '#' if should_draw else '.'
 
             operation_cycle_amount = operation_cycle_amounts[operation]
@@ -50,10 +47,8 @@ def main():
 
             cycle += 1
 
-    return sum(signal_strengths), "\n".join(["".join(line) for line in crt])
+    return "\n".join(["".join(line) for line in crt])
 
 
 if __name__ == "__main__":
-    a, b = main()
-    print(a)
-    print(b)
+    print(main())
