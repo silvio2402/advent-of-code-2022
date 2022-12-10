@@ -18,4 +18,6 @@ def main():
 
 
 if __name__ == "__main__":
-    print(main())
+    a, b = main()
+    print(a)
+    print(b)
